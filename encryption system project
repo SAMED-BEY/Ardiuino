@@ -1,0 +1,148 @@
+
+/*
+------------------------------------------SAMED ÇALIK TARAFINDAN YAPILMISTIR------------------------------------------
+DAHA DETAYLI BİLGİ EDİLEBİLMEK İÇİN ----------------------------------------------------------------------------------
+https://caliksamedgp.blogspot.com/2019/09/merhabalar-bu-benim-ilk-blog-deneyimim.html 'DEN BAKABİLİRSİNİZ-------------
+----------------------------------------------------------------------------------------------------------------------  */
+int durum =0;
+int led_yesil=9;
+int led_kirmizi= 11;
+int mavi_led = 4;             //değişkenleri burada tanımladık
+
+const int pot_pin =A0;
+
+void setup() {
+ Serial.begin(9600);
+ pinMode (led_yesil, OUTPUT);           // pinlerin modlarının ne olucağını  belirledik
+ pinMode (led_kirmizi, OUTPUT);
+pinMode (mavi_led, OUTPUT);
+ 
+
+}
+
+void loop() {
+
+
+ durum = analogRead(pot_pin);          // potansiyometreden alınan değerleri okuduk
+
+ Serial.println(durum);
+ delay(500);
+
+ sifreleme();
+         while(1)                  //burda loop u durdurmak için bir while koyduk sifreleme terarlanmamaı için 
+        {
+           digitalWrite(led_yesil,HIGH);
+ digitalWrite(led_kirmizi,HIGH);
+ digitalWrite(mavi_led,HIGH);
+// durum = analogRead(pot_pin);
+//          Serial.println(durum);
+          delay(200);
+          }
+}
+
+int sifreleme()
+{ 
+  int x =0;
+  int y =1023;
+  int sifre[]={x,y};
+ int  s =0;
+ int r =0;
+  /*                     digitalWrite(led_yesil,HIGH);
+                       digitalWrite(led_kirmizi,HIGH);
+                       delay(500);
+                      digitalWrite(led_kirmizi,LOW);
+                      digitalWrite(led_yesil,LOW);
+                      delay(500);  
+                      
+                      digitalWrite(led_yesil,HIGH);
+                       digitalWrite(led_kirmizi,HIGH);
+                       delay(500);
+                      digitalWrite(led_kirmizi,LOW);
+                      digitalWrite(led_yesil,LOW);
+                      delay(500);  */
+  while(1)
+  {
+        basliyor();
+        
+        durum = analogRead(pot_pin);
+           if (( (sifre[s]-50)<=durum ) &&  ( (sifre[s]+50>=durum )))       //if(sifre[s]==durum)
+           {
+            digitalWrite(led_yesil,HIGH);
+            delay(750);
+            digitalWrite(led_yesil,LOW);
+            s++;
+          //  Serial.print ("S = ");
+           //  Serial.println(s);
+            }
+        
+          else
+          {
+          digitalWrite(led_kirmizi,HIGH);
+          delay(750);
+          digitalWrite(led_kirmizi,LOW);
+            s=0;
+          //   Serial.print ("S = ");
+          //  Serial.println(s);
+            r++; 
+           }
+        if(s == 2 )
+        return 0;
+
+       
+        if (r==3)
+        { digitalWrite(led_kirmizi,HIGH);
+          delay(300);
+          digitalWrite(led_kirmizi,LOW);
+
+          digitalWrite(led_kirmizi,HIGH);
+          delay(300);
+          digitalWrite(led_kirmizi,LOW);
+          digitalWrite(led_kirmizi,HIGH);
+          delay(300);
+          digitalWrite(led_kirmizi,LOW);
+          return 1;
+          
+          }
+        // Serial.print ("R = ");
+         //   Serial.println(r);
+       }
+
+}
+
+
+
+
+void basliyor()
+{       /*  digitalWrite(led_kirmizi,HIGH);
+          delay(500);
+          digitalWrite(led_kirmizi,LOW);
+          digitalWrite(led_yesil,HIGH);
+          delay(500);
+          digitalWrite(led_yesil,LOW);*/
+          
+digitalWrite(led_yesil,HIGH);
+digitalWrite(led_kirmizi,HIGH);
+delay(200);
+digitalWrite(led_kirmizi,LOW);
+digitalWrite(led_yesil,LOW);
+delay(200);  
+digitalWrite(led_yesil,HIGH);
+digitalWrite(led_kirmizi,HIGH);
+delay(200);
+digitalWrite(led_kirmizi,LOW);
+digitalWrite(led_yesil,LOW);
+delay(200);  
+
+digitalWrite(led_yesil,HIGH);
+digitalWrite(led_kirmizi,HIGH);
+delay(800);
+digitalWrite(led_kirmizi,LOW);
+digitalWrite(led_yesil,LOW);
+
+digitalWrite(mavi_led,HIGH);
+delay(200);
+digitalWrite(mavi_led,LOW);
+
+delay (3500);
+  
+  }
